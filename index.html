@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workplace Behavior Survey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .consent-box {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .consent-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .consent-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .consent-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .follower-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .follower-input input {
+            flex: 1;
+        }
+
+        .btn-remove {
+            padding: 8px 16px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-remove:hover {
+            background: #c0392b;
+        }
+
+        .btn-add {
+            padding: 10px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .btn-add:hover {
+            background: #229954;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+
+        .btn-back {
+            padding: 14px 32px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-back:hover {
+            background: #7f8c8d;
+        }
+
+        .btn-back:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-next, .btn-submit {
+            padding: 14px 32px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-left: auto;
+        }
+
+        .btn-next:hover, .btn-submit:hover {
+            background: #5568d3;
+        }
+
+        .btn-next:disabled, .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .rating-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .rating-table th,
+        .rating-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .rating-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .rating-table input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        h3, h4 {
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .progress-indicator::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            color: #999;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 1;
+        }
+
+        .progress-step.active {
+            color: #667eea;
+        }
+
+        .progress-step.completed {
+            color: #27ae60;
+        }
+
+        .progress-step::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 30px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-step.active::before {
+            background: #667eea;
+        }
+
+        .progress-step.completed::before {
+            background: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Workplace Behavior Survey</h1>
+        <p class="subtitle">Dear Participant,</p>
+        <p class="subtitle">I am Harshita, a PhD research scholar from the Department of Psychology at Amity University, Gurugram. As part of my doctoral research, I am conducting a study to explore how certain workplace factors influence employees' work experiences.</p>
+        <p class="subtitle">This form contains a set of self-report questions and is intended for working professionals across various sectors. The survey is <b>completely anonymous</b>, and no personally identifiable information will be collected unless voluntarily provided. Your participation is entirely voluntary, and you may choose to withdraw at any point.</p>
+        <p class="subtitle">The questionnaire will take approximately <b>10–15</b> minutes to complete. Your honest responses will contribute meaningfully to academic research and help build insights into how organizations can support positive work environments.</p>
+        <p class="subtitle">For any queries, you may contact me at <b>harshita26@s.amity.edu</b> Thank you for your time and participation!</p>
+
+        <div class="progress-indicator" id="progressBar"></div>
+        <div id="messageArea"></div>
+
+        <form id="surveyForm">
+            <div id="dynamicSections"></div>
+            <div class="btn-container">
+                <button type="button" class="btn-back hidden" id="backBtn">Back</button>
+                <button type="button" class="btn-next hidden" id="nextBtn">Continue</button>
+                <button type="submit" class="btn-submit hidden" id="submitBtn">Submit Survey</button>
+            </div>
+        </form>
+    </div>
+
+    <script>    
+        // ==========================================
+        // CONFIGURATION - EDIT YOUR QUESTIONS HERE
+        // ==========================================
+
+        const CONFIG = {
+            // Common questions for both leaders and followers
+            commonQuestions: [
+                {
+                    id: 'Name',
+                    label: 'Name',
+                    type: 'text',
+                    required: true
+                },
+                {
+                    id: 'Email',
+                    label: 'Email',
+                    type: 'email',
+                    required: true
+                },
+                {
+                    id: 'Age Group',
+                    label: 'Age Group',
+                    type: 'select',
+                    required: true,
+                    options: ['20-30', '31-40', '41-50', '51-60', '61+']
+                },
+                {
+                    id: 'Gender',
+                    label: 'Gender',
+                    type: 'radio',
+                    required: true,
+                    options: ['Male', 'Female', 'Prefer not to say']
+                },
+                {
+                    id: 'Highest Educational Qualification',
+                    label: 'Highest Educational Qualification',
+                    type: 'radio',
+                    required: true,
+                    options: ['Diploma', "Bachelor's Degree", "Master's Degree", 'M.Phil', 'PhD'],
+                    allowOther: true
+                },
+                {
+                    id: 'Marital Status',
+                    label: 'Marital Status',
+                    type: 'radio',
+                    required: true,
+                    options: ['Single', 'Married', 'Divorced', 'Widowed', 'Prefer not to say']
+                },
+                {
+                    id: 'Total Work Experience',
+                    label: 'Total Work Experience',
+                    type: 'radio',
+                    required: true,
+                    options: ['Less than 1 year', '1-3 Years', '4-6 years', '7-10 years', 'More than 10 years']
+                },
+                {
+                    id: 'Years in Current Organization',
+                    label: 'Years in Current Organization',
+                    type: 'radio',
+                    required: true,
+                    options: ['Less than 1 year', '1-3 Years', '4-6 years', '7-10 years', 'More than 10 years']
+                },
+                {
+                    id: 'Current Sector / Industry',
+                    label: 'Current Sector / Industry',
+                    type: 'radio',
+                    required: true,
+                    options: ['IT/Software', 'Education', 'Healthcare', 'Manufacturing', 'Government/Public Sector', 'Start-up'],
+                    allowOther: true
+                },
+                {
+                    id: 'Employment Type',
+                    label: 'Employment Type',
+                    type: 'radio',
+                    required: true,
+                    options: ['Full-time', 'Part-time', 'Contractual', 'Freelance/Gig Worker'],
+                    allowOther: true
+                },
+                {
+                    id: 'Job Role / Designation',
+                    label: 'Job Role / Designation',
+                    type: 'text',
+                    required: true
+                },
+                {
+                    id: 'Work Location (City & Country)',
+                    label: 'Work Location (City & Country)',
+                    type: 'text',
+                    required: true
+                },
+                {
+                    id: 'Role in Organization',
+                    label: 'Role in Organization',
+                    type: 'radio',
+                    required: true,
+                    options: ['Team Lead / Manager', 'Employee'],
+                    isRoleSelector: true  // Special flag for role selection
+                }
+            ],
+
+            // Leader sections - multiple sections for leaders
+            leaderSections: [
+                {
+                    id : "LeadershipQuestionnaire1",
+                    title : "LQ1",
+                    textBody : `<div class="instructions-box" style="background:#f8f9fa; border:2px solid #667eea; border-radius:8px; padding:20px; margin-bottom:25px; line-height:1.6; color:#333;">
+                                <p><strong>Instructions:</strong> The following survey items refer to your leadership style, as you perceive it.</p>
+
+                                <p><strong>Please judge how frequently each statement fits your leadership style using the following scale:</strong></p>
+
+                                <ul style="list-style-type:none; padding-left:0; margin-top:10px;">
+                                    <li><strong>Not at all</strong> = 0</li>
+                                    <li><strong>Once in a while</strong> = 1</li>
+                                    <li><strong>Sometimes</strong> = 2</li>
+                                    <li><strong>Fairly often</strong> = 3</li>
+                                    <li><strong>Frequently, if not always</strong> = 4</li>
+                                </ul>
+                            </div>`,
+                    questions : [
+                        {
+                            id: '1. As a leader I say exactly what I mean.',
+                            label: '1. As a leader I say exactly what I mean.',
+                            type: 'radio',
+                            required: true,
+                            options: ['0', '1', '2', '3', '4']
+                        },
+                        {
+                           id: '2. As a leader I admit mistakes when they are made.',
+                           label: '2. As a leader I admit mistakes when they are made.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '3. As a leader I encourage everyone to speak their mind.',
+                           label: '3. As a leader I encourage everyone to speak their mind.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '4. As a leader I tell you the hard truth.',
+                           label: '4. As a leader I tell you the hard truth.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '5. As a leader I display emotions exactly in line with feelings.',
+                           label: '5. As a leader I display emotions exactly in line with feelings.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '6. As a leader I demonstrate beliefs that are consistent with actions.',
+                           label: '6. As a leader I demonstrate beliefs that are consistent with actions.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '7. As a leader I make decisions based on my core values.',
+                           label: '7. As a leader I make decisions based on my core values.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '8. As a leader I ask you to take positions that support your core values.',
+                           label: '8. As a leader I ask you to take positions that support your core values.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '9. As a leader I make difficult decisions based on high standards of ethical conduct.',
+                           label: '9. As a leader I make difficult decisions based on high standards of ethical conduct.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '10. As a leader I solicit views that challenge my deeply held positions.',
+                           label: '10. As a leader I solicit views that challenge my deeply held positions.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '11. As a leader I analyze relevant data before coming to a decision.',
+                           label: '11. As a leader I analyze relevant data before coming to a decision.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '12. As a leader I listen carefully to different points of view before coming to conclusions.',
+                           label: '12. As a leader I listen carefully to different points of view before coming to conclusions.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '13. As a leader I seek feedback to improve interactions with others.',
+                           label: '13. As a leader I seek feedback to improve interactions with others.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '14. As a leader I accurately describe how others view my capabilities.',
+                           label: '14. As a leader I accurately describe how others view my capabilities.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '15. As a leader I know when it is time to reevaluate my position on important issues.',
+                           label: '15. As a leader I know when it is time to reevaluate my position on important issues.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '16. As a leader I show I understand how specific actions impact others.',
+                           label: '16. As a leader I show I understand how specific actions impact others.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       }
+                    ]
+                },
+                {
+                   id: 'LeadershipQuestionnaire2',
+                   title: 'LQ2',
+                   textBody : `<div class="instructions-box" style="background:#f8f9fa; border:2px solid #667eea; border-radius:8px; padding:20px; margin-bottom:25px; line-height:1.6; color:#333;">
+                                   <p><strong>Instructions:</strong> Below are statements that describe how you may think about yourself right now.</p>
+
+
+                                   <p><strong>Use the following scale to indicate your level of agreement or disagreement with each statement:</strong></p>
+
+
+                                   <ul style="list-style-type:none; padding-left:0; margin-top:10px;">
+                                       <li><strong>Strongly Disagree</strong> = 1</li>
+                                       <li><strong>Disagree</strong> = 2</li>
+                                       <li><strong>Somewhat Disagree</strong> = 3</li>
+                                       <li><strong>Somewhat Agree</strong> = 4</li>
+                                       <li><strong>Agree</strong> = 5</li>
+                                       <li><strong>Strongly Agree</strong> = 6</li>
+                                   </ul>
+                               </div>`,
+                   questions: [
+                       {
+                           id: '1. I feel confident in representing my work area in meetings with management.',
+                           label: '1. I feel confident in representing my work area in meetings with management.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '2. I feel confident contributing to discussions about the organization’s strategy.',
+                           label: '2. I feel confident contributing to discussions about the organization’s strategy.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '3. I feel confident presenting information to a group of colleagues.',
+                           label: '3. I feel confident presenting information to a group of colleagues.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '4. If I should find myself in a jam at work, I could think of many ways to get out of it.',
+                           label: '4. If I should find myself in a jam at work, I could think of many ways to get out of it.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '5. Right now I see myself as being pretty successful at work.',
+                           label: '5. Right now I see myself as being pretty successful at work.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '6. I can think of many ways to reach my current work goals.',
+                           label: '6. I can think of many ways to reach my current work goals.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '7. At this time, I am meeting the work goals that I have set for myself.',
+                           label: '7. At this time, I am meeting the work goals that I have set for myself.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '8. I can be “on my own,” so to speak, at work if I have to.',
+                           label: '8. I can be “on my own,” so to speak, at work if I have to.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '9. I usually take stressful things at work in stride.',
+                           label: '9. I usually take stressful things at work in stride.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '10. I can get through difficult times at work because I’ve experienced difficulty before.',
+                           label: '10. I can get through difficult times at work because I’ve experienced difficulty before.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '11. I always look on the bright side of things regarding my job.',
+                           label: '11. I always look on the bright side of things regarding my job.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '12. I’m optimistic about what will happen to me in the future as it pertains to work.',
+                           label: '12. I’m optimistic about what will happen to me in the future as it pertains to work.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       }
+                   ]
+               },
+               {
+                   id: 'LeadershipQuestionnaire3',
+                   title: 'LQ3',
+                   textBody : `<div class="instructions-box" style="background:#f8f9fa; border:2px solid #667eea; border-radius:8px; padding:20px; margin-bottom:25px; line-height:1.6; color:#333;">
+                                   <p><strong>Instructions:</strong> The following statements ask about different aspects of your everyday experiences, both within and outside of work.</p>
+
+
+                                   <p><strong>Please respond honestly based on how you generally feel.</strong></p>
+
+
+                                   <p><strong>Rate each statement based on how much you agree with it:</strong></p>
+
+
+                                   <p style="margin-top:10px; font-weight:500; text-align:center;">
+                                       0 &nbsp; ←— &nbsp; 1 &nbsp; —— &nbsp; 2 &nbsp; —— &nbsp; 3 &nbsp; —— &nbsp; 4 &nbsp; —— &nbsp; 5 &nbsp; —— &nbsp; 6 &nbsp; —— &nbsp; 7 &nbsp; —— &nbsp; 8 &nbsp; —— &nbsp; 9 &nbsp; —→ &nbsp; 10
+                                   </p>
+                               </div>`,
+                   questions: [
+                       {
+                           id: '1. To what extent is your work purposeful and meaningful?',
+                           label: '1. To what extent is your work purposeful and meaningful?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '2. How often do you feel you are making progress towards accomplishing your work-related goals?',
+                           label: '2. How often do you feel you are making progress towards accomplishing your work-related goals?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '3. At work, how often do you become absorbed in what you are doing?',
+                           label: '3. At work, how often do you become absorbed in what you are doing?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '4. In general, how would you say your health is?',
+                           label: '4. In general, how would you say your health is?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '5. At work, how often do you feel joyful?',
+                           label: '5. At work, how often do you feel joyful?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '6. To what extent do you receive help and support from coworkers when you need it?',
+                           label: '6. To what extent do you receive help and support from coworkers when you need it?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '7. At work, how often do you feel anxious',
+                           label: '7. At work, how often do you feel anxious',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '8. How often do you achieve the important work goals you have set for yourself?',
+                           label: '8. How often do you achieve the important work goals you have set for yourself?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '9. In general, to what extent do you feel that what you do at work is valuable and worthwhile?',
+                           label: '9. In general, to what extent do you feel that what you do at work is valuable and worthwhile?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '10. At work, how often do you feel positive?',
+                           label: '10. At work, how often do you feel positive?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '11. To what extent do you feel excited and interested in your work?',
+                           label: '11. To what extent do you feel excited and interested in your work?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '12. How lonely do you feel at work?',
+                           label: '12. How lonely do you feel at work?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '13. How satisfied are you with your current physical health?',
+                           label: '13. How satisfied are you with your current physical health?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '14. At work, how often do you feel angry?',
+                           label: '14. At work, how often do you feel angry?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '15. To what extent do you feel appreciated by your coworkers?',
+                           label: '15. To what extent do you feel appreciated by your coworkers?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '16. How often are you able to handle your work-related responsibilities?',
+                           label: '16. How often are you able to handle your work-related responsibilities?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '17. To what extent do you generally feel that you have a sense of direction in your work?',
+                           label: '17. To what extent do you generally feel that you have a sense of direction in your work?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '18. Compared to others of your same age and sex, how is your health?',
+                           label: '18. Compared to others of your same age and sex, how is your health?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '19. How satisfied are you with your professional relationships?',
+                           label: '19. How satisfied are you with your professional relationships?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '20. At work, how often do you feel sad?',
+                           label: '20. At work, how often do you feel sad?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '21. At work, how often do you lose track of time while doing something you enjoy?',
+                           label: '21. At work, how often do you lose track of time while doing something you enjoy?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '22. At work, to what extent do you feel contented?',
+                           label: '22. At work, to what extent do you feel contented?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '23. Taking all things together, how happy would you say you are with your work?',
+                           label: '23. Taking all things together, how happy would you say you are with your work?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       }
+                   ]
+               },
+                {                
+                    id: 'LeadershipQuestionnaire4',
+                    title: 'LQ4',
+                    textBody : `<div class="instructions-box" style="background:#f8f9fa; border:2px solid #667eea; border-radius:8px; padding:20px; margin-bottom:25px; line-height:1.6; color:#333;">
+                                    <p><strong>Instructions:</strong> The following statements relate to how your employee/follower handles new ideas, approaches, and changes in the workplace.</p>
+
+                                    <p><strong>Please answer based on your usual work habits.</strong></p>
+
+                                    <p><strong>How often does this worker perform each of the following work behaviors?</strong></p>
+
+                                    <ul style="list-style-type:none; padding-left:0; margin-top:10px;">
+                                        <li><strong>1</strong> = Never</li>
+                                        <li><strong>2</strong> = Sporadically</li>
+                                        <li><strong>3</strong> = Sometimes</li>
+                                        <li><strong>4</strong> = Regularly</li>
+                                        <li><strong>5</strong> = Often</li>
+                                        <li><strong>6</strong> = Very Often</li>
+                                        <li><strong>7</strong> = Always</li>
+                                    </ul>
+                                </div>`,
+                    type: 'team_rating',  // Special type for team member ratings
+                    ratingParameters: [
+                        { 
+                            id: '1. Creating new ideas for improvements.', 
+                            label: '1. Creating new ideas for improvements.' 
+                        },
+                        { 
+                            id: '2. Searching out new working-methods, techniques, or instruments.', 
+                            label: '2. Searching out new working-methods, techniques, or instruments.' 
+                        },
+                        { 
+                            id: '3. Generating original solutions for problems.', 
+                            label: '3. Generating original solutions for problems.' 
+                        },
+                        { 
+                            id: '4. Mobilizing support for innovative ideas.', 
+                            label: '4. Mobilizing support for innovative ideas.' 
+                        },
+                        { 
+                            id: '5. Acquiring approval for innovative ideas.', 
+                            label: '5. Acquiring approval for innovative ideas.' 
+                        },
+                        { 
+                            id: '6. Making important organizational members enthusiastic for innovative ideas.', 
+                            label: '6. Making important organizational members enthusiastic for innovative ideas.' 
+                        },
+                        { 
+                            id: '7. Transforming innovative ideas into useful applications.', 
+                            label: '7. Transforming innovative ideas into useful applications.' 
+                        },
+                        { 
+                            id: '8. Introducing innovative ideas into the work environment in a systematic way.', 
+                            label: '8. Introducing innovative ideas into the work environment in a systematic way.' 
+                        },
+                        { 
+                            id: '9. Evaluating the utility of innovative ideas.', 
+                            label: '9. Evaluating the utility of innovative ideas.' 
+                        }
+                    ]
+                }
+            ],
+
+            // Questions for followers to rate their leader
+            followerSections: [
+                {
+                    id: 'EmployeeQuestionnaire1',
+                    title: 'EQ1',
+                    textBody : `<div class="instructions-box" style="background:#f8f9fa; border:2px solid #667eea; border-radius:8px; padding:20px; margin-bottom:25px; line-height:1.6; color:#333;">
+                                    <p><strong>Instructions:</strong> The following survey items refer to your leader’s style, as you perceive it.</p>
+
+                                    <p><strong>Judge how frequently each statement fits his or her leadership style using the following scale:</strong></p>
+
+                                    <ul style="list-style-type:none; padding-left:0; margin-top:10px;">
+                                        <li><strong>Not at all</strong> = 0</li>
+                                        <li><strong>Once in a while</strong> = 1</li>
+                                        <li><strong>Sometimes</strong> = 2</li>
+                                        <li><strong>Fairly often</strong> = 3</li>
+                                        <li><strong>Frequently, if not always</strong> = 4</li>
+                                    </ul>
+                                </div>`,
+                    questions: [
+                        {
+                            id: 'Enter the name of your Manager / Team Lead',
+                            label: 'Enter the name of your Manager / Team Lead',
+                            type: 'text',
+                            required: true
+                        },
+                        {
+                            id: '1. My Leader say exactly what he or she means.',
+                            label: '1. My Leader say exactly what he or she means.',
+                            type: 'radio',
+                            required: true,
+                            options: ['0', '1', '2', '3', '4']
+                        },
+                        {
+                            id: '2. My Leader admits mistakes when they are made.',
+                            label: '2. My Leader admits mistakes when they are made.',
+                            type: 'radio',
+                            required: true,
+                            options: ['0', '1', '2', '3', '4']
+                        },
+                         {
+                           id: '3. My Leader encourages everyone to speak their mind.',
+                           label: '3. My Leader encourages everyone to speak their mind.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '4. My Leader tells you the hard truth.',
+                           label: '4. My Leader tells you the hard truth.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '5. My Leader displays emotions exactly in line with feelings..',
+                           label: '5. My Leader displays emotions exactly in line with feelings.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '6. My Leader demonstrates beliefs that are consistent with actions.',
+                           label: '6. My Leader demonstrates beliefs that are consistent with actions.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '7. My Leader makes decisions based on my core values.',
+                           label: '7. My Leader makes decisions based on my core values.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '8. My Leader asks you to take positions that support your core values.',
+                           label: '8. My Leader asks you to take positions that support your core values.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '9. My Leader makes difficult decisions based on high standards of ethical conduct.',
+                           label: '9. My Leader makes difficult decisions based on high standards of ethical conduct.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '10. My Leader solicits views that challenge my deeply held positions.',
+                           label: '10. My Leader solicits views that challenge my deeply held positions.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '11. My Leader analyzes relevant data before coming to a decision.',
+                           label: '11. My Leader analyzes relevant data before coming to a decision.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '12. My Leader listens carefully to different points of view before coming to conclusions.',
+                           label: '12. My Leader listens carefully to different points of view before coming to conclusions.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '13. My Leader seeks feedback to improve interactions with others.',
+                           label: '13. My Leader seeks feedback to improve interactions with others.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '14. My Leader accurately describe how others view his or her capabilities.',
+                           label: '14. My Leader accurately describe how others view his or her capabilities.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '15. My Leader know when it is time to reevaluate his or her position on important issues.',
+                           label: '15. My Leader know when it is time to reevaluate his or her position on important issues.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       },
+                       {
+                           id: '16. My Leader shows he or she understands how specific actions impact others.',
+                           label: '16. My Leader shows he or she understands how specific actions impact others.',
+                           type: 'radio',
+                           required: true,
+                           options: ['0', '1', '2', '3', '4']
+                       }
+                    ]
+                },
+                {
+                   id: 'EmployeeQuestionnaire2',
+                   title: 'EQ2',
+                   textBody : `<div class="instructions-box" style="background:#f8f9fa; border:2px solid #667eea; border-radius:8px; padding:20px; margin-bottom:25px; line-height:1.6; color:#333;">
+                                   <p><strong>Instructions:</strong> Below are statements that describe how you may think about yourself right now.</p>
+
+
+                                   <p><strong>Use the following scale to indicate your level of agreement or disagreement with each statement:</strong></p>
+
+
+                                   <ul style="list-style-type:none; padding-left:0; margin-top:10px;">
+                                       <li><strong>Strongly Disagree</strong> = 1</li>
+                                       <li><strong>Disagree</strong> = 2</li>
+                                       <li><strong>Somewhat Disagree</strong> = 3</li>
+                                       <li><strong>Somewhat Agree</strong> = 4</li>
+                                       <li><strong>Agree</strong> = 5</li>
+                                       <li><strong>Strongly Agree</strong> = 6</li>
+                                   </ul>
+                               </div>`,
+                   questions: [
+                       {
+                           id: '1. I feel confident in representing my work area in meetings with management.',
+                           label: '1. I feel confident in representing my work area in meetings with management.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '2. I feel confident contributing to discussions about the organization’s strategy.',
+                           label: '2. I feel confident contributing to discussions about the organization’s strategy.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '3. I feel confident presenting information to a group of colleagues.',
+                           label: '3. I feel confident presenting information to a group of colleagues.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '4. If I should find myself in a jam at work, I could think of many ways to get out of it.',
+                           label: '4. If I should find myself in a jam at work, I could think of many ways to get out of it.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '5. Right now I see myself as being pretty successful at work.',
+                           label: '5. Right now I see myself as being pretty successful at work.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '6. I can think of many ways to reach my current work goals.',
+                           label: '6. I can think of many ways to reach my current work goals.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '7. At this time, I am meeting the work goals that I have set for myself.',
+                           label: '7. At this time, I am meeting the work goals that I have set for myself.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '8. I can be “on my own,” so to speak, at work if I have to.',
+                           label: '8. I can be “on my own,” so to speak, at work if I have to.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '9. I usually take stressful things at work in stride.',
+                           label: '9. I usually take stressful things at work in stride.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '10. I can get through difficult times at work because I’ve experienced difficulty before.',
+                           label: '10. I can get through difficult times at work because I’ve experienced difficulty before.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '11. I always look on the bright side of things regarding my job.',
+                           label: '11. I always look on the bright side of things regarding my job.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       },
+                       {
+                           id: '12. I’m optimistic about what will happen to me in the future as it pertains to work.',
+                           label: '12. I’m optimistic about what will happen to me in the future as it pertains to work.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6']
+                       }
+                   ]
+               },
+               {
+                   id: 'EmployeeQuestionnaire3',
+                   title: 'EQ3',
+                   textBody : `<div class="instructions-box" style="background:#f8f9fa; border:2px solid #667eea; border-radius:8px; padding:20px; margin-bottom:25px; line-height:1.6; color:#333;">
+                                   <p><strong>Instructions:</strong> Rate each statement based on how much you agree with it.</p>
+
+
+                                   <p><strong>Rate each statement based on how much you agree with it:</strong></p>
+
+
+                                   <p style="margin-top:10px; font-weight:500; text-align:center;">
+                                       0 &nbsp; ←— &nbsp; 1 &nbsp; —— &nbsp; 2 &nbsp; —— &nbsp; 3 &nbsp; —— &nbsp; 4 &nbsp; —— &nbsp; 5 &nbsp; —— &nbsp; 6 &nbsp; —— &nbsp; 7 &nbsp; —— &nbsp; 8 &nbsp; —— &nbsp; 9 &nbsp; —→ &nbsp; 10
+                                   </p>
+                               </div>`,
+                   questions: [
+                       {
+                           id: '1. To what extent is your work purposeful and meaningful?',
+                           label: '1. To what extent is your work purposeful and meaningful?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '2. How often do you feel you are making progress towards accomplishing your work-related goals?',
+                           label: '2. How often do you feel you are making progress towards accomplishing your work-related goals?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '3. At work, how often do you become absorbed in what you are doing?',
+                           label: '3. At work, how often do you become absorbed in what you are doing?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '4. In general, how would you say your health is?',
+                           label: '4. In general, how would you say your health is?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '5. At work, how often do you feel joyful?',
+                           label: '5. At work, how often do you feel joyful?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '6. To what extent do you receive help and support from coworkers when you need it?',
+                           label: '6. To what extent do you receive help and support from coworkers when you need it?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '7. At work, how often do you feel anxious',
+                           label: '7. At work, how often do you feel anxious',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '8. How often do you achieve the important work goals you have set for yourself?',
+                           label: '8. How often do you achieve the important work goals you have set for yourself?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '9. In general, to what extent do you feel that what you do at work is valuable and worthwhile?',
+                           label: '9. In general, to what extent do you feel that what you do at work is valuable and worthwhile?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '10. At work, how often do you feel positive?',
+                           label: '10. At work, how often do you feel positive?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '11. To what extent do you feel excited and interested in your work?',
+                           label: '11. To what extent do you feel excited and interested in your work?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '12. How lonely do you feel at work?',
+                           label: '12. How lonely do you feel at work?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '13. How satisfied are you with your current physical health?',
+                           label: '13. How satisfied are you with your current physical health?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '14. At work, how often do you feel angry?',
+                           label: '14. At work, how often do you feel angry?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '15. To what extent do you feel appreciated by your coworkers?',
+                           label: '15. To what extent do you feel appreciated by your coworkers?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '16. How often are you able to handle your work-related responsibilities?',
+                           label: '16. How often are you able to handle your work-related responsibilities?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '17. To what extent do you generally feel that you have a sense of direction in your work?',
+                           label: '17. To what extent do you generally feel that you have a sense of direction in your work?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '18. Compared to others of your same age and sex, how is your health?',
+                           label: '18. Compared to others of your same age and sex, how is your health?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '19. How satisfied are you with your professional relationships?',
+                           label: '19. How satisfied are you with your professional relationships?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '20. At work, how often do you feel sad?',
+                           label: '20. At work, how often do you feel sad?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '21. At work, how often do you lose track of time while doing something you enjoy?',
+                           label: '21. At work, how often do you lose track of time while doing something you enjoy?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '22. At work, to what extent do you feel contented?',
+                           label: '22. At work, to what extent do you feel contented?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       },
+                       {
+                           id: '23. Taking all things together, how happy would you say you are with your work?',
+                           label: '23. Taking all things together, how happy would you say you are with your work?',
+                           type: 'radio',
+                           required: true,
+                           options: ['0 = Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10 = Completely']
+                       }  
+                   ]
+                },
+                {
+                    id: 'EmployeeQuestionnaire4',
+                    title: 'EQ4',
+                    textBody : `<div class="instructions-box" style="background:#f8f9fa; border:2px solid #667eea; border-radius:8px; padding:20px; margin-bottom:25px; line-height:1.6; color:#333;">
+                                    <p><strong>Instructions:</strong> How often do you perform each of the following work behaviors?</p>
+
+                                    <ul style="list-style-type:none; padding-left:0; margin-top:10px;">
+                                        <li><strong>1</strong> = Never</li>
+                                        <li><strong>2</strong> = Sporadically</li>
+                                        <li><strong>3</strong> = Sometimes</li>
+                                        <li><strong>4</strong> = Regularly</li>
+                                        <li><strong>5</strong> = Often</li>
+                                        <li><strong>6</strong> = Very Often</li>
+                                        <li><strong>7</strong> = Always</li>
+                                    </ul>
+                                </div>`,
+                    questions: [
+                        {
+                            id: '1. Creating new ideas for improvements.',
+                            label: '1. Creating new ideas for improvements.',
+                            type: 'radio',
+                            required: true,
+                            options: ['1', '2', '3', '4', '5', '6', '7']
+                        },
+                        {
+                            id: '2. Searching out new working-methods, techniques, or instruments.',
+                            label: '2. Searching out new working-methods, techniques, or instruments.',
+                            type: 'radio',
+                            required: true,
+                            options: ['1', '2', '3', '4', '5', '6', '7']
+                        },
+                                               {
+                           id: '3. Generating original solutions for problems.',
+                           label: '3. Generating original solutions for problems.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6', '7']
+                       },
+                       {
+                           id: '4. Mobilizing support for innovative ideas.',
+                           label: '4. Mobilizing support for innovative ideas.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6', '7']
+                       },
+                       {
+                           id: '5. Acquiring approval for innovative ideas.',
+                           label: '5. Acquiring approval for innovative ideas.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6', '7']
+                       },
+                       {
+                           id: '6. Making important organizational members enthusiastic for innovative ideas.',
+                           label: '6. Making important organizational members enthusiastic for innovative ideas.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6', '7']
+                       },
+                       {
+                           id: '7. Transforming innovative ideas into useful applications.',
+                           label: '7. Transforming innovative ideas into useful applications.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6', '7']
+                       },
+                       {
+                           id: '8. Introducing innovative ideas into the work environment in a systematic way.',
+                           label: '8. Introducing innovative ideas into the work environment in a systematic way.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6', '7']
+                       },
+                       {
+                           id: '9. Evaluating the utility of innovative ideas.',
+                           label: '9. Evaluating the utility of innovative ideas.',
+                           type: 'radio',
+                           required: true,
+                           options: ['1', '2', '3', '4', '5', '6', '7']
+                       }
+                    ]
+                }
+            ],
+
+            // Google Sheets Web App URL
+            sheetURL: 'https://script.google.com/macros/s/AKfycbyP9GUHVKqzXYSO56olCPsUtn8uW-fxoB94vpMI7U3f40mH1FaBuq4O-O6wbzGdIo_r/exec'
+        };
+
+        // ==========================================
+        // APPLICATION CODE
+        // ==========================================
+
+        let currentSectionIndex = 0;
+        let allSections = [];
+        let selectedRole = null;
+        let followers = [];
+        let teamMembersCollected = false; // Track if team members have been added
+        let formDataCache = {}; // Cache to preserve form data
+        let isSubmitting = false; 
+
+       // Initialize form
+        function initForm() {
+            setupInitialSections();
+            renderCurrentSection();
+            updateProgressBar();
+        }
+
+        function setupInitialSections() {
+            allSections = [
+                { id: 'consent', title: 'Consent', type: 'consent' },
+                { id: 'common', title: 'Demographic Info', type: 'common', questions: CONFIG.commonQuestions }
+            ];
+        }
+
+        function renderCurrentSection() {
+            const container = document.getElementById('dynamicSections');
+            const section = allSections[currentSectionIndex];
+
+            // Save current form data before re-rendering
+            saveCurrentFormData();
+            
+            container.innerHTML = '';
+            
+            if (section.type === 'consent') {
+                renderConsentSection(container);
+            } else if (section.type === 'common') {
+                renderCommonSection(container);
+            } else if (section.type === 'team_rating') {
+                renderTeamRatingSection(container, section);
+            } else {
+                renderQuestionsSection(container, section);
+            }
+            
+            // Restore form data after rendering
+            restoreFormData();
+
+            updateButtons();
+        }
+
+        function saveCurrentFormData() {
+            const form = document.getElementById('surveyForm');
+            const formData = new FormData(form);
+            
+            // Save all input values
+            for (let [key, value] of formData.entries()) {
+                formDataCache[key] = value;
+            }
+            
+            // Save checkboxes separately (they might not be in FormData if unchecked)
+            form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                formDataCache[cb.name + '_checked'] = cb.checked;
+                if (cb.checked) {
+                    formDataCache[cb.name] = cb.value;
+                }
+            });
+            
+            // Save radio button selections
+            form.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                formDataCache[radio.name] = radio.value;
+            });
+
+            // Save text inputs, textareas, and selects explicitly
+            form.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], textarea, select').forEach(input => {
+                if (input.value) {
+                    formDataCache[input.name] = input.value;
+                }
+            });
+        }
+
+        function restoreFormData() {
+            const form = document.getElementById('surveyForm');
+            
+            // Restore text, email, number, textarea, select inputs
+            for (let key in formDataCache) {
+                if (key.endsWith('_checked')) continue; // Skip checkbox flags
+                
+                const input = form.querySelector(`[name="${key}"]`);
+                if (input) {
+                    if (input.type === 'radio') {
+                        const radio = form.querySelector(`input[name="${key}"][value="${formDataCache[key]}"]`);
+                        if (radio) {
+                            radio.checked = true;
+                            
+                            // If this is an "other" radio, enable the text input
+                            if (radio.value === 'other') {
+                                const otherInput = form.querySelector(`#${key}_other_text`);
+                                if (otherInput) {
+                                    otherInput.disabled = false;
+                                }
+                            }
+                        }
+                    } else if (input.type === 'checkbox') {
+                        const isChecked = formDataCache[key + '_checked'];
+                        input.checked = isChecked || false;
+                    } else {
+                        input.value = formDataCache[key];
+                    }
+                }
+            }
+        }
+
+        function renderConsentSection(container) {
+            const div = document.createElement('div');
+            div.className = 'section';
+            div.innerHTML = `
+                <div class="consent-box">
+                    <section style="font-family: Arial, sans-serif; line-height: 1.6; color: #222; max-width: 700px; margin: auto;">
+                        <h2 style="color: #333;">Informed Consent</h2>
+                        <p>
+                            You are invited to participate in a research study conducted as part of my doctoral work in Psychology at 
+                            <strong>Amity University, Gurugram</strong>.
+                        </p>
+
+                        <p><strong>Purpose:</strong> This study aims to understand how workplace factors such as leadership, personal strengths, 
+                        and well-being relate to employees’ work behavior.</p>
+
+                        <p><strong>Your Participation:</strong></p>
+                        <ul>                            
+                            <li>Participation is voluntary.</li>
+                            <li>You may skip any question or withdraw at any time without giving a reason.</li>
+                            <li>The survey will take about <strong>10–15 minutes</strong> to complete.</li>
+                        </ul>
+
+                        <p><strong>Confidentiality:</strong> Your responses will be completely anonymous and used only for academic research. 
+                        No personal identifiers will be collected.</p>
+
+                        <p><strong>Contact:</strong> For any questions, please feel free to reach out to:</p>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><strong>Harshita Tanwar</strong>, PhD Scholar — 
+                            <a href="mailto:harshita26@s.amity.edu">harshita26@s.amity.edu</a>
+                            </li>
+                            <li><strong>Dr. Fatima Shanawaz</strong>, Research Supervisor — 
+                            <a href="mailto:fshanawaz@ggn.amity.edu">fshanawaz@ggn.amity.edu</a>
+                            </li>
+                        </ul>
+
+                        <p>By checking the box below, you confirm:</p>
+                        <ul>
+                            <li>You have read this information.</li>
+                            <li>You voluntarily agree to participate.</li>
+                            <li>You are 18 years of age or older.</li>
+                        </ul>
+                    </section>
+                    <p class="consent-text">
+                        "I have read the information above, understand the purpose of this study, and voluntarily agree to participate."
+                    </p>
+                    <div class="consent-checkbox">
+                        <input type="checkbox" id="consentCheckbox" name="consent" value="yes">
+                        <label for="consentCheckbox" style="margin: 0; cursor: pointer;">Yes, I agree to participate</label>
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+            
+            document.getElementById('consentCheckbox').addEventListener('change', function() {
+                document.getElementById('nextBtn').disabled = !this.checked;
+            });
+        }
+
+        function renderCommonSection(container) {
+            const div = document.createElement('div');
+            div.className = 'section';
+            div.innerHTML = '<h2>Demographic Information</h2> <p>Please provide the following details. Your responses will remain confidential and will be used only for academic research purposes.</p><br>';
+            
+            CONFIG.commonQuestions.forEach(q => {
+                const questionDiv = createQuestionElement(q);
+                div.appendChild(questionDiv);
+            });
+            
+            container.appendChild(div);
+        }
+
+        function renderQuestionsSection(container, section) {
+            const div = document.createElement('div');
+            div.className = 'section';
+            div.innerHTML = section.textBody;
+            
+            section.questions.forEach(q => {
+                const questionDiv = createQuestionElement(q);
+                div.appendChild(questionDiv);
+            });
+            
+            container.appendChild(div);
+        }
+
+        function renderTeamRatingSection(container, section) {
+            const div = document.createElement('div');
+            div.className = 'section';
+            div.innerHTML = section.textBody;
+            
+            // Check if we're in team member collection phase or rating phase
+            if (!teamMembersCollected) {
+                // Show team member input with existing followers if any
+                const teamSection = document.createElement('div');
+                teamSection.className = 'question';
+                
+                let followersHTML = '';
+                if (followers.length > 0) {
+                    // Restore existing followers
+                    followersHTML = followers.map(name => `
+                        <div class="follower-input">
+                            <input type="text" class="follower-name" placeholder="Team member name" value="${name}">
+                            <button type="button" class="btn-remove" onclick="removeFollower(this)">Remove</button>
+                        </div>
+                    `).join('');
+                } else {
+                    // Default single input
+                    followersHTML = `
+                        <div class="follower-input">
+                            <input type="text" class="follower-name" placeholder="Team member name">
+                            <button type="button" class="btn-remove" onclick="removeFollower(this)">Remove</button>
+                        </div>
+                    `;
+                }
+                
+                teamSection.innerHTML = `
+                    <label>Enter Your Team Members <span class="required">*</span></label>
+                    <p class="help-text">Add the names of all team members you lead</p>
+                    <div id="followersList">
+                        ${followersHTML}
+                    </div>
+                    <button type="button" class="btn-add" onclick="addFollower()">+ Add Team Member</button>
+                `;
+                div.appendChild(teamSection);
+            } else {
+                // Rating tables
+                const ratingsDiv = document.createElement('div');
+                ratingsDiv.className = 'question';
+                ratingsDiv.innerHTML = '<p class="help-text">Rate each team member on the following parameters (1-7 scale)</p>';
+                
+                section.ratingParameters.forEach(param => {
+                    const paramDiv = document.createElement('div');
+                    paramDiv.style.marginTop = '20px';
+                    
+                    const heading = document.createElement('h4');
+                    heading.textContent = param.label;
+                    heading.style.marginBottom = '10px';
+                    paramDiv.appendChild(heading);
+
+                    const table = document.createElement('table');
+                    table.className = 'rating-table';
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Team Member</th>
+                                <th>Rating (1-7)</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    `;
+                    
+                    const tbody = table.querySelector('tbody');
+                    followers.forEach((name, idx) => {
+                        const row = tbody.insertRow();
+                        const nameCell = row.insertCell();
+                        nameCell.textContent = name;
+                        
+                        const ratingCell = row.insertCell();
+                        ratingCell.style.padding = '12px';
+                        
+                        const ratingGroup = document.createElement('div');
+                        ratingGroup.style.display = 'flex';
+                        ratingGroup.style.gap = '15px';
+                        
+                        for (let i = 1; i <= 7; i++) {
+                            const radioWrapper = document.createElement('label');
+                            radioWrapper.style.display = 'flex';
+                            radioWrapper.style.alignItems = 'center';
+                            radioWrapper.style.gap = '4px';
+                            radioWrapper.style.cursor = 'pointer';
+                            
+                            const radio = document.createElement('input');
+                            radio.type = 'radio';
+                            radio.name = `${param.id}_${idx}`;
+                            radio.value = i;
+                            radio.required = true;
+                            
+                            const label = document.createElement('span');
+                            label.textContent = i;
+                            label.style.fontSize = '14px';
+                            
+                            radioWrapper.appendChild(radio);
+                            radioWrapper.appendChild(label);
+                            ratingGroup.appendChild(radioWrapper);
+                        }
+                        
+                        ratingCell.appendChild(ratingGroup);
+                    });
+
+                    paramDiv.appendChild(table);
+                    ratingsDiv.appendChild(paramDiv);
+                });
+                
+                div.appendChild(ratingsDiv);
+            }
+            
+            container.appendChild(div);
+        }
+
+        function createQuestionElement(q) {
+            const div = document.createElement('div');
+            div.className = 'question';
+
+            const label = document.createElement('label');
+            label.innerHTML = `${q.label} ${q.required ? '<span class="required">*</span>' : ''}`;
+            div.appendChild(label);
+
+            let input;
+
+            switch (q.type) {
+                case 'text':
+                case 'email':
+                case 'number':
+                    input = document.createElement('input');
+                    input.type = q.type;
+                    input.name = q.id;
+                    input.required = q.required || false;
+                    if (q.min) input.min = q.min;
+                    if (q.max) input.max = q.max;
+                    div.appendChild(input);
+                    break;
+
+                case 'textarea':
+                    input = document.createElement('textarea');
+                    input.name = q.id;
+                    input.required = q.required || false;
+                    div.appendChild(input);
+                    break;
+
+                case 'select':
+                    input = document.createElement('select');
+                    input.name = q.id;
+                    input.required = q.required || false;
+                    
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Select...';
+                    input.appendChild(defaultOption);
+
+                    q.options.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt;
+                        option.textContent = opt;
+                        input.appendChild(option);
+                    });
+                    div.appendChild(input);
+                    break;
+
+                case 'radio':
+                    const radioGroup = document.createElement('div');
+                    radioGroup.className = 'radio-group';
+                    
+                    q.options.forEach(opt => {
+                        const optDiv = document.createElement('div');
+                        optDiv.className = 'radio-option';
+                        
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.id = `${q.id}_${opt}`;
+                        radio.name = q.id;
+                        radio.value = opt;
+                        radio.required = q.required || false;
+                        
+                        const optLabel = document.createElement('label');
+                        optLabel.htmlFor = `${q.id}_${opt}`;
+                        optLabel.textContent = opt;
+                        optLabel.style.margin = '0';
+                        
+                        optDiv.appendChild(radio);
+                        optDiv.appendChild(optLabel);
+                        radioGroup.appendChild(optDiv);
+                    });
+                    
+                    if (q.allowOther) {
+                        const otherDiv = document.createElement('div');
+                        otherDiv.className = 'radio-option';
+                        otherDiv.style.alignItems = 'flex-start';
+                        
+                        const otherRadio = document.createElement('input');
+                        otherRadio.type = 'radio';
+                        otherRadio.id = `${q.id}_other`;
+                        otherRadio.name = q.id;
+                        otherRadio.value = 'other';
+                        otherRadio.required = q.required || false;
+                        
+                        const otherContainer = document.createElement('div');
+                        otherContainer.style.flex = '1';
+                        
+                        const otherLabel = document.createElement('label');
+                        otherLabel.htmlFor = `${q.id}_other`;
+                        otherLabel.textContent = 'Other:';
+                        otherLabel.style.margin = '0 0 8px 0';
+                        otherLabel.style.display = 'block';
+                        
+                        const otherInput = document.createElement('input');
+                        otherInput.type = 'text';
+                        otherInput.id = `${q.id}_other_text`;
+                        otherInput.name = `${q.id}_other_text`;
+                        otherInput.placeholder = 'Please specify...';
+                        otherInput.disabled = true;
+                        otherInput.style.width = '100%';
+                        
+                        otherRadio.addEventListener('change', function() {
+                            if (this.checked) {
+                                otherInput.disabled = false;
+                                otherInput.focus();
+                            }
+                        });
+                        
+                        radioGroup.querySelectorAll('input[type="radio"]').forEach(r => {
+                            r.addEventListener('change', function() {
+                                if (this.value !== 'other') {
+                                    otherInput.disabled = true;
+                                    otherInput.value = '';
+                                }
+                            });
+                        });
+                        
+                        otherInput.addEventListener('focus', function() {
+                            otherRadio.checked = true;
+                            this.disabled = false;
+                        });
+                        
+                        otherContainer.appendChild(otherLabel);
+                        otherContainer.appendChild(otherInput);
+                        
+                        otherDiv.appendChild(otherRadio);
+                        otherDiv.appendChild(otherContainer);
+                        radioGroup.appendChild(otherDiv);
+                    }
+                    
+                    div.appendChild(radioGroup);
+                    break;
+
+                case 'checkbox':
+                    const checkboxGroup = document.createElement('div');
+                    checkboxGroup.className = 'checkbox-group';
+                    
+                    q.options.forEach(opt => {
+                        const optDiv = document.createElement('div');
+                        optDiv.className = 'checkbox-option';
+                        
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = `${q.id}_${opt}`;
+                        checkbox.name = `${q.id}[]`;
+                        checkbox.value = opt;
+                        
+                        const optLabel = document.createElement('label');
+                        optLabel.htmlFor = `${q.id}_${opt}`;
+                        optLabel.textContent = opt;
+                        optLabel.style.margin = '0';
+                        
+                        optDiv.appendChild(checkbox);
+                        optDiv.appendChild(optLabel);
+                        checkboxGroup.appendChild(optDiv);
+                    });
+                    div.appendChild(checkboxGroup);
+                    break;
+            }
+
+            if (q.helpText) {
+                const help = document.createElement('p');
+                help.className = 'help-text';
+                help.textContent = q.helpText;
+                div.appendChild(help);
+            }
+
+            return div;
+        }
+
+        function addFollower() {
+            const list = document.getElementById('followersList');
+            const div = document.createElement('div');
+            div.className = 'follower-input';
+            div.innerHTML = `
+                <input type="text" class="follower-name" placeholder="Team member name">
+                <button type="button" class="btn-remove" onclick="removeFollower(this)">Remove</button>
+            `;
+            list.appendChild(div);
+        }
+
+        function removeFollower(btn) {
+            const list = document.getElementById('followersList');
+            if (list.children.length > 1) {
+                btn.parentElement.remove();
+            } else {
+                alert('You must have at least one team member');
+            }
+        }
+
+         function validateCurrentSection() {
+            const section = allSections[currentSectionIndex];
+            const form = document.getElementById('surveyForm');
+            
+            if (section.type === 'consent') {
+                const checkbox = document.getElementById('consentCheckbox');
+                if (!checkbox.checked) {
+                    showMessage('Please agree to participate to continue', 'error');
+                    return false;
+                }
+            } else if (section.type === 'common') {
+                // Check role selection first
+                const roleInput = form.querySelector('input[name="Role in Organization"]:checked');
+                if (!roleInput) {
+                    showMessage('Please select whether you are a Leader or Follower', 'error');
+                    return false;
+                }
+                
+                // Validate all required questions
+                for (const q of CONFIG.commonQuestions) {
+                    if (q.required) {
+                        if (q.type === 'radio') {
+                            const checked = form.querySelector(`input[name="${q.id}"]:checked`);
+                            if (!checked) {
+                                showMessage('Please answer all required questions', 'error');
+                                return false;
+                            }
+                        } else {
+                            const input = form.querySelector(`[name="${q.id}"]`);
+                            if (!input || !input.value.trim()) {
+                                showMessage('Please answer all required questions', 'error');
+                                return false;
+                            }
+                        }
+                    }
+                }
+                
+                // Setup role-specific sections
+                selectedRole = roleInput.value;
+
+                // Save the role value to cache immediately
+                formDataCache['role'] = selectedRole;
+
+                if (selectedRole === 'Employee' || selectedRole === 'employee') {
+                    CONFIG.followerSections.forEach(sec => {
+                        allSections.push({...sec, title: sec.title, type: 'questions'});
+                    });
+                } else {
+                    CONFIG.leaderSections.forEach(sec => {
+                        allSections.push({...sec, title: sec.title, type: sec.type || 'questions'});
+                    });
+                }
+            } else if (section.type === 'team_rating') {
+                if (!teamMembersCollected) {
+                    // Collecting team members
+                    const inputs = document.querySelectorAll('.follower-name');
+                    followers = Array.from(inputs)
+                        .map(input => input.value.trim())
+                        .filter(name => name !== '');
+
+                    if (followers.length === 0) {
+                        showMessage('Please add at least one team member', 'error');
+                        return false;
+                    }
+                    
+                    // Valid - will transition to rating phase
+                    return true;
+                } else {
+                    // Validate ratings - check if all radio groups have a selection
+                    let allRated = true;
+                    section.ratingParameters.forEach(param => {
+                        followers.forEach((name, idx) => {
+                            const radioName = `${param.id}_${idx}`;
+                            const checked = form.querySelector(`input[name="${radioName}"]:checked`);
+                            if (!checked) {
+                                allRated = false;
+                            }
+                        });
+                    });
+                    
+                    if (!allRated) {
+                        showMessage('Please rate all team members on all parameters', 'error');
+                        return false;
+                    }
+                }
+            } else {
+                // Validate regular question sections
+                if (section.questions) {
+                    for (const q of section.questions) {
+                        if (q.required) {
+                            if (q.type === 'radio') {
+                                const checked = form.querySelector(`input[name="${q.id}"]:checked`);
+                                if (!checked) {
+                                    showMessage('Please answer all required questions', 'error');
+                                    return false;
+                                }
+                            } else {
+                                const input = form.querySelector(`[name="${q.id}"]`);
+                                if (!input || !input.value.trim()) {
+                                    showMessage('Please answer all required questions', 'error');
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return true;
+        }
+
+        function goToNextSection() {
+            if (!validateCurrentSection()) {
+                return;
+            }
+            
+            const currentSection = allSections[currentSectionIndex];
+            
+            // Special handling for team rating section
+            if (currentSection.type === 'team_rating' && !teamMembersCollected) {
+                // Moving from team member entry to rating tables
+                teamMembersCollected = true;
+                renderCurrentSection();
+                updateButtons();
+                window.scrollTo(0, 0);
+                return;
+            }
+            
+            currentSectionIndex++;
+            
+            if (currentSectionIndex >= allSections.length) {
+                // All sections complete
+                return;
+            }
+            
+            renderCurrentSection();
+            updateProgressBar();
+            updateButtons();
+            window.scrollTo(0, 0);
+        }
+
+        function goToPreviousSection() {
+            const currentSection = allSections[currentSectionIndex];
+            
+            // Save current data before going back
+            saveCurrentFormData();
+            
+            // Special handling for team rating section
+            if (currentSection.type === 'team_rating' && teamMembersCollected) {
+                // Going back from rating tables to team member entry
+                teamMembersCollected = false;
+                renderCurrentSection();
+                updateButtons();
+                window.scrollTo(0, 0);
+                return;
+            }
+            
+            if (currentSectionIndex > 0) {
+                currentSectionIndex--;
+                
+                // If going back to common section and role-specific sections were added, remove them
+                if (allSections[currentSectionIndex].type === 'common' && selectedRole !== null) {
+                    // Keep only consent and common sections
+                    allSections = allSections.slice(0, 2);
+                    selectedRole = null;
+                    followers = [];
+                    teamMembersCollected = false;
+                }
+                
+                renderCurrentSection();
+                updateProgressBar();
+                updateButtons();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function updateButtons() {
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const backBtn = document.getElementById('backBtn');
+            const currentSection = allSections[currentSectionIndex];
+            
+            // Check if we're on the last section (accounting for role-specific sections not yet added)
+            const isLastKnownSection = currentSectionIndex === allSections.length - 1;
+            const isConsentSection = currentSection.type === 'consent';
+            const isCommonSection = currentSection.type === 'common';
+            const isTeamRatingSection = currentSection.type === 'team_rating';
+            
+            // Show/hide back button
+            if (isConsentSection) {
+                backBtn.classList.add('hidden');
+            } else {
+                backBtn.classList.remove('hidden');
+            }
+            
+            // For team rating section, check if we're in the data entry phase or rating phase
+            if (isTeamRatingSection && !teamMembersCollected) {
+                // Still collecting team members - show "Generate Rating Form" button
+                nextBtn.textContent = 'Generate Rating Form';
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            } else if (isLastKnownSection && !isCommonSection && selectedRole !== null) {
+                // On the last section after all role sections loaded - show submit
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                // Regular sections - show continue
+                nextBtn.textContent = 'Continue';
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+            
+            if (isConsentSection) {
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.disabled = false;
+            }
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.innerHTML = '';
+            
+            allSections.forEach((section, index) => {
+                const step = document.createElement('div');
+                step.className = 'progress-step';
+                step.textContent = section.title;
+                
+                if (index < currentSectionIndex) {
+                    step.classList.add('completed');
+                } else if (index === currentSectionIndex) {
+                    step.classList.add('active');
+                }
+                
+                progressBar.appendChild(step);
+            });
+        }
+
+        function showMessage(text, type) {
+            const area = document.getElementById('messageArea');
+            area.innerHTML = `<div class="${type}-message">${text}</div>`;
+            setTimeout(() => area.innerHTML = '', 5000);
+            window.scrollTo(0, 0);
+        }
+
+        function formatTimestamp() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        }
+
+        function collectFormData() {
+            const roleQuestion = CONFIG.commonQuestions.find(q => q.isRoleSelector);
+            const roleId = roleQuestion ? roleQuestion.id : 'role';
+            
+            const baseData = {
+                Timestamp: formatTimestamp(),
+                Consent: formDataCache['consent'] || null,
+                role: formDataCache[roleId] || selectedRole
+            };
+            
+            CONFIG.commonQuestions.forEach(q => {
+                if (!q.isRoleSelector) {
+                    const value = formDataCache[q.id];
+                    if (value === 'other' && q.allowOther) {
+                        baseData[q.id] = formDataCache[`${q.id}_other_text`] || 'Other';
+                    } else {
+                        baseData[q.id] = value || null;
+                    }
+                }
+            });
+
+            if (selectedRole === 'employee' || selectedRole === 'Employee') {
+                const data = { ...baseData };
+                
+                CONFIG.followerSections.forEach(section => {
+                    section.questions.forEach(q => {
+                        const value = formDataCache[q.id];
+                        if (value === 'other' && q.allowOther) {
+                            data[q.id] = formDataCache[`${q.id}_other_text`] || 'Other';
+                        } else {
+                            data[q.id] = value || null;
+                        }
+                    });
+                });
+                
+                return [data]; // RETURNS ARRAY with single object
+                
+            } else {                
+                // Collect leader self-assessment
+                const leaderSelfAssessment = {};
+                CONFIG.leaderSections.forEach(section => {
+                    if (section.type !== 'team_rating' && section.questions) {
+                        section.questions.forEach(q => {
+                            const value = formDataCache[q.id];
+                            if (value === 'other' && q.allowOther) {
+                                leaderSelfAssessment[q.id] = formDataCache[`${q.id}_other_text`] || 'Other';
+                            } else {
+                                leaderSelfAssessment[q.id] = value || null;
+                            }
+                        });
+                    }
+                });
+                
+                // CREATE ARRAY - ONE OBJECT PER TEAM MEMBER
+                const dataArray = [];
+                
+                if (followers.length > 0) {
+                    followers.forEach((followerName, idx) => {
+                        // NEW OBJECT FOR EACH TEAM MEMBER
+                        const memberData = { ...baseData, ...leaderSelfAssessment };
+                        memberData.teamMemberName = followerName;
+                        
+                        // Add ratings for THIS specific team member
+                        const ratingSection = CONFIG.leaderSections.find(s => s.type === 'team_rating');
+                        if (ratingSection && ratingSection.ratingParameters) {
+                            ratingSection.ratingParameters.forEach(param => {
+                                const fieldName = `${param.id}_${idx}`;
+                                const value = formDataCache[fieldName];
+                                // KEY CHANGE: Store as "communication_rating" not "followerName_communication"
+                                memberData[`${param.id}_rating`] = value || null;
+                            });
+                        }
+                        
+                        dataArray.push(memberData);
+                    });
+                }
+                return dataArray; // RETURNS ARRAY
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('nextBtn').addEventListener('click', goToNextSection);
+        document.getElementById('backBtn').addEventListener('click', goToPreviousSection);
+
+        document.getElementById('surveyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Prevent double submission
+            if (isSubmitting) {
+                return;
+            }
+            
+            // Save current section data before submitting
+            saveCurrentFormData();
+            
+            if (!validateCurrentSection()) {
+                return;
+            }
+            
+            // Lock the form
+            isSubmitting = true;
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            const dataArray = collectFormData(); // Now returns array
+
+            try {
+                // Send data array to server
+                const response = await fetch(CONFIG.sheetURL, {
+                    method: 'POST',
+                    body: JSON.stringify({ 
+                        dataArray: dataArray,
+                        isMultipleRows: dataArray.length > 1
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.result === 'success') {
+                    showMessage(`Survey submitted successfully! Thank you for your participation.`, 'success');
+                    
+                    // Clear cache after successful submission
+                    formDataCache = {};
+                    
+                    // Disable form completely to prevent any further submissions
+                    document.getElementById('surveyForm').style.pointerEvents = 'none';
+                    
+                    setTimeout(() => {
+                        location.reload();
+                    }, 3000);
+                } else {
+                    throw new Error(result.error || 'Submission failed');
+                }
+            } catch (error) {
+                showMessage('Error submitting survey: ' + error.message, 'error');
+                
+                // Re-enable button on error
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+
+        // Initialize form on page load
+        initForm();
+    </script>
+</body>
+</html>
