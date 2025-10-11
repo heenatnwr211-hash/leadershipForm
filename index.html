@@ -27,10 +27,26 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
 
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            .container {
+                padding: 40px;
+            }
+        }
+
         h1 {
             color: #333;
             margin-bottom: 10px;
             font-size: 28px;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
         }
 
         .subtitle {
@@ -181,6 +197,13 @@
             justify-content: space-between;
         }
 
+        @media (min-width: 480px) {
+            .btn-container {
+                flex-direction: row;
+                gap: 15px;
+            }
+        }
+
         .btn-back {
             padding: 14px 32px;
             background: #95a5a6;
@@ -191,6 +214,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
+        }
+
+        @media (min-width: 480px) {
+            .btn-back {
+                padding: 14px 32px;
+                width: auto;
+            }
         }
 
         .btn-back:hover {
@@ -215,6 +245,14 @@
             margin-left: auto;
         }
 
+        @media (min-width: 480px) {
+            .btn-next, .btn-submit {
+                padding: 14px 32px;
+                margin-left: auto;
+                width: auto;
+            }
+        }
+
         .btn-next:hover, .btn-submit:hover {
             background: #5568d3;
         }
@@ -228,6 +266,9 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
+            display: block;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .rating-table th,
@@ -235,12 +276,71 @@
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #e0e0e0;
+            white-space: nowrap;
         }
 
         .rating-table th {
             background: #f8f9fa;
             font-weight: 600;
             color: #444;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+         /* Mobile: Stack rating tables vertically */
+        @media (max-width: 767px) {
+            .rating-table {
+                display: block;
+            }
+            
+            .rating-table thead {
+                display: none;
+            }
+            
+            .rating-table tbody {
+                display: block;
+            }
+            
+            .rating-table tr {
+                display: block;
+                margin-bottom: 20px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                padding: 15px;
+                background: #f8f9fa;
+            }
+            
+            .rating-table td {
+                display: block;
+                border: none;
+                padding: 8px 0;
+                text-align: left;
+            }
+            
+            .rating-table td:first-child {
+                font-weight: 600;
+                font-size: 16px;
+                color: #667eea;
+                margin-bottom: 12px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid #667eea;
+            }
+            
+            .rating-table td:last-child {
+                padding-top: 8px;
+            }
+            
+            /* Make radio buttons wrap on small screens if needed */
+            .rating-table td div {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .rating-table td label {
+                min-width: 40px;
+            }
         }
 
         .rating-table input[type="number"] {
@@ -284,9 +384,22 @@
             font-size: 20px;
         }
 
+        @media (min-width: 768px) {
+            h2 {
+                font-size: 20px;
+            }
+        }
+
+
         h3, h4 {
             color: #444;
             margin-bottom: 10px;
+        }
+
+        @media (min-width: 768px) {
+            h3, h4 {
+                font-size: 18px;
+            }
         }
 
         .progress-indicator {
@@ -294,8 +407,20 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            padding: 0 10px;
+            margin-left: -20px;
+            margin-right: -20px;    
+            padding: 0 20px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .progress-indicator {
+                margin-left: -40px;
+                margin-right: -40px;
+                padding: 0 40px;
+            }
         }
 
         .progress-indicator::before {
@@ -311,12 +436,20 @@
 
         .progress-step {
             flex: 1;
+            min-width: 60px;
             text-align: center;
             position: relative;
             color: #999;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
             z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .progress-step {
+                font-size: 12px;
+                min-width: 80px;
+            }
         }
 
         .progress-step.active {
