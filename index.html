@@ -574,6 +574,12 @@
                     allowOther: true
                 },
                 {
+                    id: 'Current Organization Name',
+                    label: 'Current Organization Name',
+                    type: 'text',
+                    required: true
+                },
+                {
                     id: 'Employment Type',
                     label: 'Employment Type',
                     type: 'radio',
@@ -1647,6 +1653,110 @@
             updateButtons();
         }
 
+        function isQuestionRequired(q) {
+            return q.required !== false;
+        }
+
+        function showValidationError(message, element) {
+            showMessage(message, 'error');
+
+            if (element) {
+                if (typeof element.focus === 'function') {
+                    element.focus();
+                }
+
+                if (!element.disabled && typeof element.reportValidity === 'function') {
+                    element.reportValidity();
+                }
+            }
+
+            return false;
+        }
+
+        function validateQuestion(q, form) {
+            if (!isQuestionRequired(q)) {
+                return true;
+            }
+
+            if (q.type === 'radio') {
+                const checked = form.querySelector(`input[name="${q.id}"]:checked`);
+
+                if (!checked) {
+                    return showValidationError('Please answer all required questions', form.querySelector(`input[name="${q.id}"]`));
+                }
+
+                if (q.allowOther && checked.value === 'other') {
+                    const otherInput = form.querySelector(`[name="${q.id}_other_text"]`);
+
+                    if (!otherInput) {
+                        return showValidationError('Please answer all required questions');
+                    }
+
+                    otherInput.value = otherInput.value.trim();
+
+                    if (!otherInput.value) {
+                        return showValidationError('Please complete the "Other" field before continuing', otherInput);
+                    }
+
+                    if (!otherInput.checkValidity()) {
+                        return showValidationError(otherInput.validationMessage || 'Please enter a valid response', otherInput);
+                    }
+                }
+
+                return true;
+            }
+
+            if (q.type === 'checkbox') {
+                const checkedOptions = form.querySelectorAll(`input[name="${q.id}[]"]:checked`);
+
+                if (!checkedOptions.length) {
+                    return showValidationError('Please answer all required questions', form.querySelector(`input[name="${q.id}[]"]`));
+                }
+
+                return true;
+            }
+
+            const input = form.querySelector(`[name="${q.id}"]`);
+
+            if (!input) {
+                return showValidationError('Please answer all required questions');
+            }
+
+            if (typeof input.value === 'string') {
+                input.value = input.value.trim();
+            }
+
+            if (!input.value) {
+                return showValidationError('Please answer all required questions', input);
+            }
+
+            if (!input.checkValidity()) {
+                return showValidationError(input.validationMessage || 'Please enter a valid response', input);
+            }
+
+            return true;
+        }
+
+        function validateFollowerInputs() {
+            const inputs = Array.from(document.querySelectorAll('.follower-name'));
+
+            if (inputs.length === 0) {
+                return showValidationError('Please add at least one team member');
+            }
+
+            const emptyInput = inputs.find(input => {
+                input.value = input.value.trim();
+                return !input.value;
+            });
+
+            if (emptyInput) {
+                return showValidationError('Please fill in every team member name or remove empty fields', emptyInput);
+            }
+
+            followers = inputs.map(input => input.value);
+            return true;
+        }
+
         function saveCurrentFormData() {
             const form = document.getElementById('surveyForm');
             const formData = new FormData(form);
@@ -1671,9 +1781,7 @@
 
             // Save text inputs, textareas, and selects explicitly
             form.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], textarea, select').forEach(input => {
-                if (input.value) {
-                    formDataCache[input.name] = input.value;
-                }
+                formDataCache[input.name] = input.value;
             });
         }
 
@@ -1696,6 +1804,7 @@
                                 const otherInput = form.querySelector(`#${key}_other_text`);
                                 if (otherInput) {
                                     otherInput.disabled = false;
+                                    otherInput.required = true;
                                 }
                             }
                         }
@@ -1737,7 +1846,7 @@
                         <p><strong>Your Participation:</strong></p>
                         <ul>                            
                             <li>Participation is voluntary.</li>
-                            <li>You may skip any question or withdraw at any time without giving a reason.</li>
+                            <li>You may stop the survey at any time before final submission without giving a reason.</li>
                             <li>The survey will take about <strong>10–15 minutes</strong> to complete.</li>
                         </ul>
 
@@ -1809,7 +1918,7 @@
                     // Restore existing followers
                     followersHTML = followers.map(name => `
                         <div class="follower-input">
-                            <input type="text" class="follower-name" placeholder="Team member name" value="${name}">
+                            <input type="text" class="follower-name" placeholder="Team member name" value="${name}" required>
                             <button type="button" class="btn-remove" onclick="removeFollower(this)">Remove</button>
                         </div>
                     `).join('');
@@ -1817,7 +1926,7 @@
                     // Default single input
                     followersHTML = `
                         <div class="follower-input">
-                            <input type="text" class="follower-name" placeholder="Team member name">
+                            <input type="text" class="follower-name" placeholder="Team member name" required>
                             <button type="button" class="btn-remove" onclick="removeFollower(this)">Remove</button>
                         </div>
                     `;
@@ -1910,9 +2019,10 @@
         function createQuestionElement(q) {
             const div = document.createElement('div');
             div.className = 'question';
+            const required = isQuestionRequired(q);
 
             const label = document.createElement('label');
-            label.innerHTML = `${q.label} ${q.required ? '<span class="required">*</span>' : ''}`;
+            label.innerHTML = `${q.label} ${required ? '<span class="required">*</span>' : ''}`;
             div.appendChild(label);
 
             let input;
@@ -1924,7 +2034,7 @@
                     input = document.createElement('input');
                     input.type = q.type;
                     input.name = q.id;
-                    input.required = q.required || false;
+                    input.required = required;
                     if (q.min) input.min = q.min;
                     if (q.max) input.max = q.max;
                     div.appendChild(input);
@@ -1933,14 +2043,14 @@
                 case 'textarea':
                     input = document.createElement('textarea');
                     input.name = q.id;
-                    input.required = q.required || false;
+                    input.required = required;
                     div.appendChild(input);
                     break;
 
                 case 'select':
                     input = document.createElement('select');
                     input.name = q.id;
-                    input.required = q.required || false;
+                    input.required = required;
                     
                     const defaultOption = document.createElement('option');
                     defaultOption.value = '';
@@ -1969,7 +2079,7 @@
                         radio.id = `${q.id}_${opt}`;
                         radio.name = q.id;
                         radio.value = opt;
-                        radio.required = q.required || false;
+                        radio.required = required;
                         
                         const optLabel = document.createElement('label');
                         optLabel.htmlFor = `${q.id}_${opt}`;
@@ -1991,7 +2101,7 @@
                         otherRadio.id = `${q.id}_other`;
                         otherRadio.name = q.id;
                         otherRadio.value = 'other';
-                        otherRadio.required = q.required || false;
+                        otherRadio.required = required;
                         
                         const otherContainer = document.createElement('div');
                         otherContainer.style.flex = '1';
@@ -2008,11 +2118,13 @@
                         otherInput.name = `${q.id}_other_text`;
                         otherInput.placeholder = 'Please specify...';
                         otherInput.disabled = true;
+                        otherInput.required = false;
                         otherInput.style.width = '100%';
                         
                         otherRadio.addEventListener('change', function() {
                             if (this.checked) {
                                 otherInput.disabled = false;
+                                otherInput.required = required;
                                 otherInput.focus();
                             }
                         });
@@ -2021,6 +2133,7 @@
                             r.addEventListener('change', function() {
                                 if (this.value !== 'other') {
                                     otherInput.disabled = true;
+                                    otherInput.required = false;
                                     otherInput.value = '';
                                 }
                             });
@@ -2029,6 +2142,7 @@
                         otherInput.addEventListener('focus', function() {
                             otherRadio.checked = true;
                             this.disabled = false;
+                            this.required = required;
                         });
                         
                         otherContainer.appendChild(otherLabel);
@@ -2084,7 +2198,7 @@
             const div = document.createElement('div');
             div.className = 'follower-input';
             div.innerHTML = `
-                <input type="text" class="follower-name" placeholder="Team member name">
+                <input type="text" class="follower-name" placeholder="Team member name" required>
                 <button type="button" class="btn-remove" onclick="removeFollower(this)">Remove</button>
             `;
             list.appendChild(div);
@@ -2113,26 +2227,13 @@
                 // Check role selection first
                 const roleInput = form.querySelector('input[name="Role in Organization"]:checked');
                 if (!roleInput) {
-                    showMessage('Please select whether you are a Leader or Follower', 'error');
-                    return false;
+                    return showValidationError('Please select your role in the organization', form.querySelector('input[name="Role in Organization"]'));
                 }
                 
                 // Validate all required questions
                 for (const q of CONFIG.commonQuestions) {
-                    if (q.required) {
-                        if (q.type === 'radio') {
-                            const checked = form.querySelector(`input[name="${q.id}"]:checked`);
-                            if (!checked) {
-                                showMessage('Please answer all required questions', 'error');
-                                return false;
-                            }
-                        } else {
-                            const input = form.querySelector(`[name="${q.id}"]`);
-                            if (!input || !input.value.trim()) {
-                                showMessage('Please answer all required questions', 'error');
-                                return false;
-                            }
-                        }
+                    if (!validateQuestion(q, form)) {
+                        return false;
                     }
                 }
                 
@@ -2154,13 +2255,7 @@
             } else if (section.type === 'team_rating') {
                 if (!teamMembersCollected) {
                     // Collecting team members
-                    const inputs = document.querySelectorAll('.follower-name');
-                    followers = Array.from(inputs)
-                        .map(input => input.value.trim())
-                        .filter(name => name !== '');
-
-                    if (followers.length === 0) {
-                        showMessage('Please add at least one team member', 'error');
+                    if (!validateFollowerInputs()) {
                         return false;
                     }
                     
@@ -2188,20 +2283,8 @@
                 // Validate regular question sections
                 if (section.questions) {
                     for (const q of section.questions) {
-                        if (q.required) {
-                            if (q.type === 'radio') {
-                                const checked = form.querySelector(`input[name="${q.id}"]:checked`);
-                                if (!checked) {
-                                    showMessage('Please answer all required questions', 'error');
-                                    return false;
-                                }
-                            } else {
-                                const input = form.querySelector(`[name="${q.id}"]`);
-                                if (!input || !input.value.trim()) {
-                                    showMessage('Please answer all required questions', 'error');
-                                    return false;
-                                }
-                            }
+                        if (!validateQuestion(q, form)) {
+                            return false;
                         }
                     }
                 }
