@@ -507,6 +507,33 @@
         // CONFIGURATION - EDIT YOUR QUESTIONS HERE
         // ==========================================
 
+        const RESPONSE_SCALES = {
+            frequency04: [
+                { value: '0', label: 'Not at all' },
+                { value: '1', label: 'Once in a while' },
+                { value: '2', label: 'Sometimes' },
+                { value: '3', label: 'Fairly often' },
+                { value: '4', label: 'Frequently, if not always' }
+            ],
+            agreement16: [
+                { value: '1', label: 'Strongly Disagree' },
+                { value: '2', label: 'Disagree' },
+                { value: '3', label: 'Somewhat Disagree' },
+                { value: '4', label: 'Somewhat Agree' },
+                { value: '5', label: 'Agree' },
+                { value: '6', label: 'Strongly Agree' }
+            ],
+            frequency17: [
+                { value: '1', label: 'Never' },
+                { value: '2', label: 'Sporadically' },
+                { value: '3', label: 'Sometimes' },
+                { value: '4', label: 'Regularly' },
+                { value: '5', label: 'Often' },
+                { value: '6', label: 'Very Often' },
+                { value: '7', label: 'Always' }
+            ]
+        };
+
         const CONFIG = {
             // Common questions for both leaders and followers
             commonQuestions: [
@@ -580,6 +607,14 @@
                     required: true
                 },
                 {
+                    id: 'For how long have you been working under your current supervisor/leader?',
+                    label: 'For how long have you been working under your current supervisor/leader?',
+                    type: 'radio',
+                    required: true,
+                    options: ['Less than 6 months', '6 months – 1 year', '1 – 3 years', '3 – 5 years', 'More than 5 years'],
+                    allowOther: false
+                },
+                {
                     id: 'Employment Type',
                     label: 'Employment Type',
                     type: 'radio',
@@ -633,112 +668,112 @@
                             label: '1. As a leader I say exactly what I mean.',
                             type: 'radio',
                             required: true,
-                            options: ['0', '1', '2', '3', '4']
+                            options: RESPONSE_SCALES.frequency04
                         },
                         {
                            id: '2. As a leader I admit mistakes when they are made.',
                            label: '2. As a leader I admit mistakes when they are made.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '3. As a leader I encourage everyone to speak their mind.',
                            label: '3. As a leader I encourage everyone to speak their mind.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '4. As a leader I tell you the hard truth.',
                            label: '4. As a leader I tell you the hard truth.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '5. As a leader I display emotions exactly in line with feelings.',
                            label: '5. As a leader I display emotions exactly in line with feelings.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '6. As a leader I demonstrate beliefs that are consistent with actions.',
                            label: '6. As a leader I demonstrate beliefs that are consistent with actions.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '7. As a leader I make decisions based on my core values.',
                            label: '7. As a leader I make decisions based on my core values.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '8. As a leader I ask you to take positions that support your core values.',
                            label: '8. As a leader I ask you to take positions that support your core values.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '9. As a leader I make difficult decisions based on high standards of ethical conduct.',
                            label: '9. As a leader I make difficult decisions based on high standards of ethical conduct.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '10. As a leader I solicit views that challenge my deeply held positions.',
                            label: '10. As a leader I solicit views that challenge my deeply held positions.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '11. As a leader I analyze relevant data before coming to a decision.',
                            label: '11. As a leader I analyze relevant data before coming to a decision.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '12. As a leader I listen carefully to different points of view before coming to conclusions.',
                            label: '12. As a leader I listen carefully to different points of view before coming to conclusions.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '13. As a leader I seek feedback to improve interactions with others.',
                            label: '13. As a leader I seek feedback to improve interactions with others.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '14. As a leader I accurately describe how others view my capabilities.',
                            label: '14. As a leader I accurately describe how others view my capabilities.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '15. As a leader I know when it is time to reevaluate my position on important issues.',
                            label: '15. As a leader I know when it is time to reevaluate my position on important issues.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '16. As a leader I show I understand how specific actions impact others.',
                            label: '16. As a leader I show I understand how specific actions impact others.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        }
                     ]
                 },
@@ -767,84 +802,84 @@
                            label: '1. I feel confident in representing my work area in meetings with management.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '2. I feel confident contributing to discussions about the organization’s strategy.',
                            label: '2. I feel confident contributing to discussions about the organization’s strategy.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '3. I feel confident presenting information to a group of colleagues.',
                            label: '3. I feel confident presenting information to a group of colleagues.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '4. If I should find myself in a jam at work, I could think of many ways to get out of it.',
                            label: '4. If I should find myself in a jam at work, I could think of many ways to get out of it.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '5. Right now I see myself as being pretty successful at work.',
                            label: '5. Right now I see myself as being pretty successful at work.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '6. I can think of many ways to reach my current work goals.',
                            label: '6. I can think of many ways to reach my current work goals.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '7. At this time, I am meeting the work goals that I have set for myself.',
                            label: '7. At this time, I am meeting the work goals that I have set for myself.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '8. I can be “on my own,” so to speak, at work if I have to.',
                            label: '8. I can be “on my own,” so to speak, at work if I have to.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '9. I usually take stressful things at work in stride.',
                            label: '9. I usually take stressful things at work in stride.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '10. I can get through difficult times at work because I’ve experienced difficulty before.',
                            label: '10. I can get through difficult times at work because I’ve experienced difficulty before.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '11. I always look on the bright side of things regarding my job.',
                            label: '11. I always look on the bright side of things regarding my job.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '12. I’m optimistic about what will happen to me in the future as it pertains to work.',
                            label: '12. I’m optimistic about what will happen to me in the future as it pertains to work.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        }
                    ]
                },
@@ -1121,112 +1156,112 @@
                             label: '1. My Leader say exactly what he or she means.',
                             type: 'radio',
                             required: true,
-                            options: ['0', '1', '2', '3', '4']
+                            options: RESPONSE_SCALES.frequency04
                         },
                         {
                             id: '2. My Leader admits mistakes when they are made.',
                             label: '2. My Leader admits mistakes when they are made.',
                             type: 'radio',
                             required: true,
-                            options: ['0', '1', '2', '3', '4']
+                            options: RESPONSE_SCALES.frequency04
                         },
                          {
                            id: '3. My Leader encourages everyone to speak their mind.',
                            label: '3. My Leader encourages everyone to speak their mind.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '4. My Leader tells you the hard truth.',
                            label: '4. My Leader tells you the hard truth.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '5. My Leader displays emotions exactly in line with feelings..',
                            label: '5. My Leader displays emotions exactly in line with feelings.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '6. My Leader demonstrates beliefs that are consistent with actions.',
                            label: '6. My Leader demonstrates beliefs that are consistent with actions.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '7. My Leader makes decisions based on my core values.',
                            label: '7. My Leader makes decisions based on my core values.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '8. My Leader asks you to take positions that support your core values.',
                            label: '8. My Leader asks you to take positions that support your core values.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '9. My Leader makes difficult decisions based on high standards of ethical conduct.',
                            label: '9. My Leader makes difficult decisions based on high standards of ethical conduct.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '10. My Leader solicits views that challenge my deeply held positions.',
                            label: '10. My Leader solicits views that challenge my deeply held positions.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '11. My Leader analyzes relevant data before coming to a decision.',
                            label: '11. My Leader analyzes relevant data before coming to a decision.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '12. My Leader listens carefully to different points of view before coming to conclusions.',
                            label: '12. My Leader listens carefully to different points of view before coming to conclusions.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '13. My Leader seeks feedback to improve interactions with others.',
                            label: '13. My Leader seeks feedback to improve interactions with others.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '14. My Leader accurately describe how others view his or her capabilities.',
                            label: '14. My Leader accurately describe how others view his or her capabilities.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '15. My Leader know when it is time to reevaluate his or her position on important issues.',
                            label: '15. My Leader know when it is time to reevaluate his or her position on important issues.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        },
                        {
                            id: '16. My Leader shows he or she understands how specific actions impact others.',
                            label: '16. My Leader shows he or she understands how specific actions impact others.',
                            type: 'radio',
                            required: true,
-                           options: ['0', '1', '2', '3', '4']
+                           options: RESPONSE_SCALES.frequency04
                        }
                     ]
                 },
@@ -1255,84 +1290,84 @@
                            label: '1. I feel confident in representing my work area in meetings with management.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '2. I feel confident contributing to discussions about the organization’s strategy.',
                            label: '2. I feel confident contributing to discussions about the organization’s strategy.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '3. I feel confident presenting information to a group of colleagues.',
                            label: '3. I feel confident presenting information to a group of colleagues.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '4. If I should find myself in a jam at work, I could think of many ways to get out of it.',
                            label: '4. If I should find myself in a jam at work, I could think of many ways to get out of it.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '5. Right now I see myself as being pretty successful at work.',
                            label: '5. Right now I see myself as being pretty successful at work.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '6. I can think of many ways to reach my current work goals.',
                            label: '6. I can think of many ways to reach my current work goals.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '7. At this time, I am meeting the work goals that I have set for myself.',
                            label: '7. At this time, I am meeting the work goals that I have set for myself.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '8. I can be “on my own,” so to speak, at work if I have to.',
                            label: '8. I can be “on my own,” so to speak, at work if I have to.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '9. I usually take stressful things at work in stride.',
                            label: '9. I usually take stressful things at work in stride.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '10. I can get through difficult times at work because I’ve experienced difficulty before.',
                            label: '10. I can get through difficult times at work because I’ve experienced difficulty before.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '11. I always look on the bright side of things regarding my job.',
                            label: '11. I always look on the bright side of things regarding my job.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        },
                        {
                            id: '12. I’m optimistic about what will happen to me in the future as it pertains to work.',
                            label: '12. I’m optimistic about what will happen to me in the future as it pertains to work.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6']
+                           options: RESPONSE_SCALES.agreement16
                        }
                    ]
                },
@@ -1536,63 +1571,63 @@
                             label: '1. Creating new ideas for improvements.',
                             type: 'radio',
                             required: true,
-                            options: ['1', '2', '3', '4', '5', '6', '7']
+                            options: RESPONSE_SCALES.frequency17
                         },
                         {
                             id: '2. Searching out new working-methods, techniques, or instruments.',
                             label: '2. Searching out new working-methods, techniques, or instruments.',
                             type: 'radio',
                             required: true,
-                            options: ['1', '2', '3', '4', '5', '6', '7']
+                            options: RESPONSE_SCALES.frequency17
                         },
                                                {
                            id: '3. Generating original solutions for problems.',
                            label: '3. Generating original solutions for problems.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6', '7']
+                           options: RESPONSE_SCALES.frequency17
                        },
                        {
                            id: '4. Mobilizing support for innovative ideas.',
                            label: '4. Mobilizing support for innovative ideas.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6', '7']
+                           options: RESPONSE_SCALES.frequency17
                        },
                        {
                            id: '5. Acquiring approval for innovative ideas.',
                            label: '5. Acquiring approval for innovative ideas.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6', '7']
+                           options: RESPONSE_SCALES.frequency17
                        },
                        {
                            id: '6. Making important organizational members enthusiastic for innovative ideas.',
                            label: '6. Making important organizational members enthusiastic for innovative ideas.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6', '7']
+                           options: RESPONSE_SCALES.frequency17
                        },
                        {
                            id: '7. Transforming innovative ideas into useful applications.',
                            label: '7. Transforming innovative ideas into useful applications.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6', '7']
+                           options: RESPONSE_SCALES.frequency17
                        },
                        {
                            id: '8. Introducing innovative ideas into the work environment in a systematic way.',
                            label: '8. Introducing innovative ideas into the work environment in a systematic way.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6', '7']
+                           options: RESPONSE_SCALES.frequency17
                        },
                        {
                            id: '9. Evaluating the utility of innovative ideas.',
                            label: '9. Evaluating the utility of innovative ideas.',
                            type: 'radio',
                            required: true,
-                           options: ['1', '2', '3', '4', '5', '6', '7']
+                           options: RESPONSE_SCALES.frequency17
                        }
                     ]
                 }
@@ -1980,8 +2015,9 @@
                         const ratingGroup = document.createElement('div');
                         ratingGroup.style.display = 'flex';
                         ratingGroup.style.gap = '15px';
+                        ratingGroup.style.flexWrap = 'wrap';
                         
-                        for (let i = 1; i <= 7; i++) {
+                        RESPONSE_SCALES.frequency17.forEach(option => {
                             const radioWrapper = document.createElement('label');
                             radioWrapper.style.display = 'flex';
                             radioWrapper.style.alignItems = 'center';
@@ -1991,17 +2027,17 @@
                             const radio = document.createElement('input');
                             radio.type = 'radio';
                             radio.name = `${param.id}_${idx}`;
-                            radio.value = i;
+                            radio.value = option.value;
                             radio.required = true;
                             
                             const label = document.createElement('span');
-                            label.textContent = i;
+                            label.textContent = option.label;
                             label.style.fontSize = '14px';
                             
                             radioWrapper.appendChild(radio);
                             radioWrapper.appendChild(label);
                             ratingGroup.appendChild(radioWrapper);
-                        }
+                        });
                         
                         ratingCell.appendChild(ratingGroup);
                     });
@@ -2071,19 +2107,22 @@
                     radioGroup.className = 'radio-group';
                     
                     q.options.forEach(opt => {
+                        const optionValue = typeof opt === 'object' ? opt.value : opt;
+                        const optionLabel = typeof opt === 'object' ? opt.label : opt;
+                        const optionId = `${q.id}_${optionValue}`;
                         const optDiv = document.createElement('div');
                         optDiv.className = 'radio-option';
                         
                         const radio = document.createElement('input');
                         radio.type = 'radio';
-                        radio.id = `${q.id}_${opt}`;
+                        radio.id = optionId;
                         radio.name = q.id;
-                        radio.value = opt;
+                        radio.value = optionValue;
                         radio.required = required;
                         
                         const optLabel = document.createElement('label');
-                        optLabel.htmlFor = `${q.id}_${opt}`;
-                        optLabel.textContent = opt;
+                        optLabel.htmlFor = optionId;
+                        optLabel.textContent = optionLabel;
                         optLabel.style.margin = '0';
                         
                         optDiv.appendChild(radio);
